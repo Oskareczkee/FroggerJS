@@ -1,0 +1,26 @@
+@font-face {
+    font-family: frogger;
+    src: url("../fonts/PublicPixel-rv0pA.ttf");
+}
+
+* {
+    padding: 0;
+    margin: 0;
+}
+
+body {
+    background-color: green;
+    color: white;
+}
+
+#header{
+    font-size: 4rem;
+    font-family: frogger;
+    color: white;
+}
+
+#game-canvas{
+    border: 1px solid black;
+    width: 90%;
+    height: 90vh;
+}

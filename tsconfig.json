@@ -1,0 +1,15 @@
+{
+    "compilerOptions": {
+      "module": "ES6",
+      "esModuleInterop": true,
+      "target": "es6",
+      "moduleResolution": "node",
+      "sourceMap": false,
+      "rootDir": "./public/src",
+      "outDir": "./public/js",
+      "strict": true
+    },
+    "lib": ["es2015"],
+    "include": ["./public/src/**/*.ts"], //compile files
+    "exclude": ["node_modules"] // Pliki do pominięcia
+  }
