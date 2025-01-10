@@ -16,8 +16,8 @@ export class Scene {
     private lastUpdate = 0;
     private deltaT = 0;
 
-    get FPS() { return 60.0; }
-    get UPDATE_INTERVAL() { return 1000 / this.FPS; } /*update interval is in ms*/
+    static get FPS() { return 60.0; }
+    static get UPDATE_INTERVAL() { return 1000 / this.FPS; } /*update interval is in ms*/
 
     constructor(context2D: CanvasRenderingContext2D) {
         this.renderer = new Renderer2D(context2D);
@@ -48,7 +48,9 @@ export class Scene {
         return (<Collider>obj).Collided ? true : false;
     }
 
-    public addObject(obj: GameObject) {
+    public addObject(obj: GameObject, name : string = '') {
+        obj.Canvas = this.renderer.Context;
+        obj.name = name;
         this.objects.push(obj);
 
         if (this.isDrawable(obj)) /*object implements drawable*/
@@ -65,6 +67,26 @@ export class Scene {
         });
     }
 
+    public addObjects(obj : Iterable<GameObject>): void{
+        for(let o of obj)
+            this.addObject(o);
+    }
+
+    public addMap(map : Iterable<Iterable<GameObject>>) : void{
+        for(let arr of map){
+            for(let obj of arr)
+                this.addObject(obj);
+        }
+    }
+
+    public findByName(name : string) : GameObject | null{
+        let out =  this.objects.find(obj => obj.name===name);
+        if(!out) return null;
+        return out;
+    }
+
+    public setup(){} //when creating your own scene, you can put objects here
+
     public loop() {
         /*canvas makes things a little bit messy, but genereally this is how it is adviced to make updates*/
         const update = () => {
@@ -72,7 +94,7 @@ export class Scene {
             actualTime = new Date().getTime();
             this.deltaT = actualTime - this.lastUpdate;
 
-            if (this.deltaT >= this.UPDATE_INTERVAL) {
+            if (this.deltaT >= Scene.UPDATE_INTERVAL) {
                 //collisions
                 this.dynamicColliders.forEach(collider => {
                     this.colliders.forEach(c => {
@@ -80,8 +102,8 @@ export class Scene {
 
                         if(collider.Collided(c)){
                             //invoke on collision / on collided if function exists (!=null)
-                            collider.OnCollision!==null ? collider.OnCollision(c) : {}
-                            c.OnCollided!=null ? c.OnCollided(collider) : {}
+                            collider.OnCollision!==null ? collider.OnCollision(collider, c) : {}
+                            c.OnCollided!=null ? c.OnCollided(c, collider) : {}
                         }
                     })
                 })

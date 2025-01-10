@@ -2,8 +2,8 @@ import { GameObject } from "../GameObject";
 import type { Drawable } from "../interfaces/Drawable";
 
 export class ImageObject extends GameObject implements Drawable {
-    private imageSrc = '';
-    private img: HTMLImageElement;
+    protected imageSrc = '';
+    protected img: HTMLImageElement;
 
     constructor(posX: number = 0, posY: number = 0, width: number = 0, height: number = 0, imageSrc: string) {
         super(posX, posY, width, height);

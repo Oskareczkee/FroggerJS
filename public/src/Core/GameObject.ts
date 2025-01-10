@@ -12,8 +12,17 @@ export abstract class GameObject {
     public height: number;
 
     public components : Array<Component>;
+    public name : string = ''
 
-    constructor(posX: number = 0, posY: number = 0, width: number = 0, height: number = 0) {
+    protected canvas2D : CanvasRenderingContext2D | null;
+
+    get Canvas(){return this.canvas2D;}
+    set Canvas(canvas){this.canvas2D = canvas;}
+
+    constructor(posX: number = 0, posY: number = 0, width: number = 0, height: number = 0, name : string='') {
+        this.canvas2D = null; /*i don't want to deal with null values, just create temp context here and set it using set*/
+        this.name = name;
+
         this.posX = posX;
         this.posY = posY;
         this.prevPosX = posX;

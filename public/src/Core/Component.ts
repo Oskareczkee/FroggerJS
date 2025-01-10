@@ -17,7 +17,7 @@ export abstract class Component {
     }
 
     get ObjectRef(): GameObject | null { return this.objectRef; }
-    set ObjectRef(obj: GameObject) { this.objectRef = obj; }
+    set ObjectRef(obj: GameObject | null) { this.objectRef = obj; }
     get OffsetX(){return this.offsetX;}
     get OffsetY(){return this.offsetY;}
 

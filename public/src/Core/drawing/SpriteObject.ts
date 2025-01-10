@@ -3,22 +3,22 @@ import { Drawable } from "../interfaces/Drawable";
 import { SpriteAnimation } from "./SpriteAnimation";
 
 export class SpriteObject extends GameObject implements Drawable {
-    private sheetSrc: string = '';
-    private sheetImg: HTMLImageElement;
-    private frameWidth: number = 0;
-    private frameHeight: number = 0;
+    protected sheetSrc: string = '';
+    protected sheetImg: HTMLImageElement;
+    protected frameWidth: number = 0;
+    protected frameHeight: number = 0;
 
     //idle frame will be cropped from actual sprite sheet
-    private idleFrameCol: number = 0;
-    private idleFrameRow: number = 0;
-    private idleFrameWidth: number = 0;
-    private idleFrameHeight: number = 0;
+    protected idleFrameCol: number = 0;
+    protected idleFrameRow: number = 0;
+    protected idleFrameWidth: number = 0;
+    protected idleFrameHeight: number = 0;
 
-    private animations: { [key: string]: SpriteAnimation } = {}
-    private currentAnimation: SpriteAnimation | null = null;
-    private isPlaying: boolean = false;
-    private currentFrame: number = 0;
-    private lastFrameTime : number = 0; //when was last frame played?
+    protected animations: { [key: string]: SpriteAnimation } = {}
+    protected currentAnimation: SpriteAnimation | null = null;
+    protected isPlaying: boolean = false;
+    protected currentFrame: number = 0;
+    protected lastFrameTime : number = 0; //when was last frame played?
 
 
     get IsPlaying(): boolean { return this.isPlaying; }

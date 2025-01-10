@@ -1,4 +1,5 @@
 export class Renderer2D {
+    get Context() { return this.renderingContext2D; }
     constructor(context2D) {
         this.fillColor = 'black';
         this.renderingContext2D = context2D;
@@ -6,6 +7,9 @@ export class Renderer2D {
     }
     addObject(obj) {
         this.objects.push(obj);
+    }
+    addObjects(obj) {
+        this.objects.push(...obj);
     }
     removeObject(obj) {
         let index = this.objects.indexOf(obj);

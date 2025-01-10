@@ -5,6 +5,8 @@ export class Renderer2D{
     private renderingContext2D : CanvasRenderingContext2D;
     public fillColor : string = 'black';
 
+    get Context(){return this.renderingContext2D;}
+
     constructor(context2D : CanvasRenderingContext2D){
         this.renderingContext2D = context2D;
         
@@ -13,6 +15,10 @@ export class Renderer2D{
 
     public addObject(obj : Drawable) : void {
         this.objects.push(obj);
+    }
+
+    public addObjects(obj : Iterable<Drawable>): void{
+        this.objects.push(...obj);
     }
 
     public removeObject(obj : Drawable) : void {

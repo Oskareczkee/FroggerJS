@@ -3,8 +3,8 @@ import { CircleCollider } from "./CircleCollider";
 import { CircleCircleCollison } from "./Collisions";
 
 export abstract class Collider extends Component{
-    public OnCollision : ((other : Collider) => void) | null = null;
-    public OnCollided : ((other : Collider) => void) | null = null;
+    public OnCollision : ((collider : Collider, other : Collider) => void) | null = null;
+    public OnCollided : ((collider : Collider, other : Collider) => void) | null = null;
 
     public Collided(other : Collider) : boolean {
         if(this instanceof CircleCollider && other instanceof CircleCollider)

@@ -11,6 +11,17 @@ export class Input {
             instance.keymap.delete(e.key);
         });
     }
+    //this function can be used to simulate key press
+    addKeyPressed(key) {
+        if (this.keymap.has(key))
+            return;
+        this.keymap.add(key);
+    }
+    //this function can be used to simulate key press
+    removeKeyPressed(key) {
+        if (this.keymap.has(key))
+            this.keymap.delete(key);
+    }
     isKeyPressed(key) {
         if (this.keymap.has(key))
             return true;

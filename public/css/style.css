@@ -4,13 +4,17 @@
 }
 
 * {
-    padding: 0;
-    margin: 0;
+    padding: 0 !important;
+    margin: 0 !important;
 }
 
 body {
     background-color: green;
     color: white;
+}
+
+#game{
+    background: radial-gradient(circle, rgba(255,255,255,1) 0%, rgba(4,158,15,1) 71%);;
 }
 
 #header{
@@ -19,8 +23,89 @@ body {
     color: white;
 }
 
+@media screen and (max-width: 728px) {
+    #header {
+        font-size: 2rem;
+    }
+}
+
+.game-container{
+    position: relative;
+    width: 80%;
+    height: 80vh;
+}
+
 #game-canvas{
     border: 1px solid black;
-    width: 90%;
-    height: 90vh;
+    width: 100%;
+    height: 80vh;
 }
+
+#game-canvas-error{
+    border:  1px solid black;
+    width: 100%;
+    height: 80vh;
+    background-color: #2e2e2e;
+
+    display: flex;
+    align-items: center;
+    justify-content: center;
+    text-align: center;
+    padding: 20px;
+}
+
+.game-stats{
+    display: flex;
+    width: 80%;    
+    justify-content:space-evenly;
+    align-items: center;
+}
+
+.game-stats > .stat{
+    display: flex;
+    flex-direction: column;
+    align-items: center;
+}
+
+.game-stats > .stat > *{
+    margin: 0;
+    font-family: frogger;
+}
+
+.control {
+    position: relative;
+    z-index: 10;
+    bottom: 165px;
+    left: calc(98% - 150px);
+
+    display: grid;
+    grid-template-columns: repeat(2, 1fr);
+    grid-template-rows: repeat(2, 1fr);
+    border-radius: 50%;
+    width: 150px;
+    height: 150px;
+    border: 2px solid rgba(0, 0, 0, 0.1);
+    transform: rotate(45deg);
+    overflow: hidden;
+  }
+  .control__button {
+    display: block;
+    cursor: pointer;
+    position: relative;
+    background: rgba(0, 0, 0, 0.1);
+    border-width: 0;
+  }
+  .control__button > svg {
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    fill: rgba(0, 0, 0, 0.3);
+    width: 33%;
+    height: 33%;
+    display: block;
+    transform: translate(-50%, -50%) rotate(-45deg);
+  }
+  .control__button:hover {
+    outline: none;
+    background: rgba(0, 0, 0, 0.35);
+  }
