@@ -143,7 +143,7 @@ export class Frog extends SpriteObject implements Updatable {
             this.updateElements();
         }
 
-        if(this.lives===0){
+        if(this.lives < 0){
             this.score=0;
             this.level=1;
             this.lives=3;
