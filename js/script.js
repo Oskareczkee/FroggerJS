@@ -49,9 +49,9 @@ var buttonUp = document.getElementById("game-button-up"), buttonDown = document.
 var buttonLeft = document.getElementById("game-button-left"), buttonRight = document.getElementById("game-button-right");
 var buttons = document.getElementById("game-buttons");
 buttons === null || buttons === void 0 ? void 0 : buttons.addEventListener("touchstart", function () {
+    //WARNING: in future just find better solution, iterating through 1 element is not costfull, but this is dirty play
     GameAudio.playAll(); //audio is set to play when canvas is focused, but when it loses that focus audio stops playing
 });
-//no need to add touch end
 buttonUp === null || buttonUp === void 0 ? void 0 : buttonUp.addEventListener("touchstart", function () {
     upInterval = setInterval(function () {
         Input.addKeyPressed('w');
