@@ -4,12 +4,19 @@ export class Renderer2D {
         this.fillColor = 'black';
         this.renderingContext2D = context2D;
         this.objects = [];
+        this.backgroundObjects = [];
     }
     addObject(obj) {
         this.objects.push(obj);
     }
     addObjects(obj) {
         this.objects.push(...obj);
+    }
+    addBackgroundObject(obj) {
+        this.backgroundObjects.push(obj);
+    }
+    addBackgroundObjects(obj) {
+        this.backgroundObjects.push(...obj);
     }
     removeObject(obj) {
         let index = this.objects.indexOf(obj);
@@ -22,6 +29,10 @@ export class Renderer2D {
         let canvasWidth = this.renderingContext2D.canvas.width;
         let canvasHeight = this.renderingContext2D.canvas.height;
         this.renderingContext2D.fillRect(0, 0, canvasWidth, canvasHeight);
+        //draw background objects first
+        this.backgroundObjects.forEach(element => {
+            element.draw(this.renderingContext2D);
+        });
         this.objects.forEach(element => {
             element.draw(this.renderingContext2D);
         });

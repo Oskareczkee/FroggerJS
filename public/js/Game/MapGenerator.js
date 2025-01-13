@@ -16,7 +16,7 @@ export class MapGeneratorOptions {
         //number of tiles vertically
         this.tilesVertical = 20;
         //fills screen, overrides tileWidthPx, and tileHeightPx to fit the whole screen
-        this.fillScreen = false;
+        this.fillScreen = true;
         //how much padding has to be added relative to the screen, works only if fillScreen is set to true
         this.screenPaddingX = 0;
         //how much padding has to be added relative to the screen, works only if fillScreen is set to true

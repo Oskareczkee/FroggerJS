@@ -16,6 +16,7 @@ export class Scene {
     private lastUpdate = 0;
     private deltaT = 0;
 
+
     static get FPS() { return 60.0; }
     static get UPDATE_INTERVAL() { return 1000 / this.FPS; } /*update interval is in ms*/
 
@@ -48,13 +49,14 @@ export class Scene {
         return (<Collider>obj).Collided ? true : false;
     }
 
-    public addObject(obj: GameObject, name : string = '') {
+    public addObject(obj: GameObject, name : string = '', isBackground = false) {
         obj.Canvas = this.renderer.Context;
         obj.name = name;
+        obj.Scene = this;
         this.objects.push(obj);
 
         if (this.isDrawable(obj)) /*object implements drawable*/
-            this.renderer.addObject(obj);
+            !isBackground ? this.renderer.addObject(obj) : this.renderer.addBackgroundObject(obj);
 
         if (this.isUpdatable(obj)) /*object implements updatable*/
             this.updatableObjects.push(obj);
@@ -67,22 +69,36 @@ export class Scene {
         });
     }
 
-    public addObjects(obj : Iterable<GameObject>): void{
+    public addObjects(obj : Iterable<GameObject>, areBackground = false): void{
         for(let o of obj)
-            this.addObject(o);
+            this.addObject(o,'', areBackground);
     }
 
     public addMap(map : Iterable<Iterable<GameObject>>) : void{
         for(let arr of map){
             for(let obj of arr)
-                this.addObject(obj);
+                this.addObject(obj, "__map_object__", true);
         }
+    }
+
+    //removes everything from scene
+    public clearScene(){
+        this.objects = [];
+        this.updatableObjects = [];
+        this.staticColliders = [];
+        this.dynamicColliders = [];
+        this.colliders = [];
     }
 
     public findByName(name : string) : GameObject | null{
         let out =  this.objects.find(obj => obj.name===name);
         if(!out) return null;
         return out;
+    }
+
+    public removeByName(name : string){
+        let idx =  this.objects.findIndex(obj => obj.name===name);
+        idx !== -1  ? this.objects.splice(idx, 1) : {}
     }
 
     public setup(){} //when creating your own scene, you can put objects here

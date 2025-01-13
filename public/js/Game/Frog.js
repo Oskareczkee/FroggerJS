@@ -4,6 +4,8 @@ import { SpriteObject } from "../Core/drawing/SpriteObject";
 import { Input } from "./Input";
 import { Audio as GameAudio } from "./Audio";
 import { Car } from "./Car";
+import { MapGenerator, MapGeneratorOptions } from "./MapGenerator";
+import { Options } from "./Options";
 export const frogImageSrc = "../resources/sprites/frog.png";
 export const frogSpritesSrc = "../resources/sprites/frog-sprites.png";
 export class Frog extends SpriteObject {
@@ -58,6 +60,7 @@ export class Frog extends SpriteObject {
         this.livesElement = null;
         this.scoreElement = null;
         this.levelElement = null;
+        this.name = "Frog";
         let frameLength = 200;
         //add animations
         this.addAnimation(new SpriteAnimation("MoveDown", 30, 30, 0, 0, 3, frameLength));
@@ -70,6 +73,7 @@ export class Frog extends SpriteObject {
         this.addComponent(this.collider);
         GameAudio.addIfNotExists("../resources/audio/jump.mp3", 0.5, false, "sound_frog_jump", true);
         GameAudio.addIfNotExists("../resources/audio/death.mp3", 0.5, false, "sound_frog_death", true);
+        GameAudio.addIfNotExists("../resources/audio/gameover.mp3", 1.0, false, "sound_game_over", true);
     }
     moveUp() {
         this.fireAnimation("MoveUp");
@@ -96,6 +100,7 @@ export class Frog extends SpriteObject {
         GameAudio.play("sound_frog_jump");
     }
     update() {
+        var _a, _b, _c, _d, _e, _f;
         if (this.Canvas === null)
             throw new Error("Frog: Object canvas reference is not set");
         this.prevPosX = this.posX;
@@ -120,12 +125,25 @@ export class Frog extends SpriteObject {
             this.level++;
             this.lives += 3;
             this.updateElements();
+            if (this.canvas2D === null)
+                return; //stop typescript crying      
+            (_a = this.Scene) === null || _a === void 0 ? void 0 : _a.clearScene();
+            (_b = this.Scene) === null || _b === void 0 ? void 0 : _b.addMap(new MapGenerator(this.canvas2D).GenerateMap(this.canvas2D.canvas.width / Options.TileWidth, this.canvas2D.canvas.height / Options.TileHeigth, new MapGeneratorOptions()));
+            //z-index is not supported, so order matters
+            (_c = this.Scene) === null || _c === void 0 ? void 0 : _c.addObject(this);
         }
         if (this.lives < 0) {
             this.score = 0;
             this.level = 1;
             this.lives = 3;
             this.updateElements();
+            GameAudio.play("sound_game_over");
+            if (this.canvas2D === null)
+                return; //stop typescript crying      
+            (_d = this.Scene) === null || _d === void 0 ? void 0 : _d.clearScene();
+            (_e = this.Scene) === null || _e === void 0 ? void 0 : _e.addMap(new MapGenerator(this.canvas2D).GenerateMap(this.canvas2D.canvas.width / Options.TileWidth, this.canvas2D.canvas.height / Options.TileHeigth, new MapGeneratorOptions()));
+            //z-index is not supported, so order matters
+            (_f = this.Scene) === null || _f === void 0 ? void 0 : _f.addObject(this);
         }
     }
 }

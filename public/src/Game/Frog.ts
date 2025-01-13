@@ -6,6 +6,8 @@ import { Updatable } from "../Core/interfaces/Updatable";
 import { Input } from "./Input";
 import { Audio as GameAudio } from "./Audio";
 import { Car } from "./Car";
+import { MapGenerator, MapGeneratorOptions } from "./MapGenerator";
+import { Options } from "./Options";
 
 export const frogImageSrc = "../resources/sprites/frog.png";
 export const frogSpritesSrc = "../resources/sprites/frog-sprites.png";
@@ -71,6 +73,7 @@ export class Frog extends SpriteObject implements Updatable {
     constructor(posX : number, posY: number, width: number, height: number){
         super(posX,posY,width,height,frogSpritesSrc,30,30);
 
+        this.name = "Frog";
         let frameLength = 200;
         //add animations
         this.addAnimation(new SpriteAnimation("MoveDown", 30,30,0,0,3,frameLength));
@@ -86,6 +89,7 @@ export class Frog extends SpriteObject implements Updatable {
 
         GameAudio.addIfNotExists("../resources/audio/jump.mp3",0.5, false, "sound_frog_jump", true);
         GameAudio.addIfNotExists("../resources/audio/death.mp3", 0.5, false, "sound_frog_death", true);
+        GameAudio.addIfNotExists("../resources/audio/gameover.mp3", 1.0, false, "sound_game_over", true);
     }
 
     private moveUp(){
@@ -139,8 +143,14 @@ export class Frog extends SpriteObject implements Updatable {
             this.score+= 100 * this.level;
             this.level++;
             this.lives+=3;
-
+            
             this.updateElements();
+            
+            if(this.canvas2D===null) return; //stop typescript crying      
+            this.Scene?.clearScene();
+            this.Scene?.addMap(new MapGenerator(this.canvas2D).GenerateMap(this.canvas2D.canvas.width/Options.TileWidth,this.canvas2D.canvas.height/Options.TileHeigth, new MapGeneratorOptions()));
+            //z-index is not supported, so order matters
+            this.Scene?.addObject(this);
         }
 
         if(this.lives < 0){
@@ -148,6 +158,14 @@ export class Frog extends SpriteObject implements Updatable {
             this.level=1;
             this.lives=3;
             this.updateElements();
+
+            GameAudio.play("sound_game_over");
+
+            if(this.canvas2D===null) return; //stop typescript crying      
+            this.Scene?.clearScene();
+            this.Scene?.addMap(new MapGenerator(this.canvas2D).GenerateMap(this.canvas2D.canvas.width/Options.TileWidth,this.canvas2D.canvas.height/Options.TileHeigth, new MapGeneratorOptions()));
+            //z-index is not supported, so order matters
+            this.Scene?.addObject(this);
         }
 
     }

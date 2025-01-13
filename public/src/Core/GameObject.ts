@@ -1,4 +1,5 @@
 import { Component } from "./Component";
+import { Scene } from "./Scene";
 
 export abstract class GameObject {
     public posX: number;
@@ -15,9 +16,12 @@ export abstract class GameObject {
     public name : string = ''
 
     protected canvas2D : CanvasRenderingContext2D | null;
+    protected scene : Scene | null = null;
 
     get Canvas(){return this.canvas2D;}
     set Canvas(canvas){this.canvas2D = canvas;}
+    get Scene() {return this.scene;}
+    set Scene(scene) {this.scene=scene;}
 
     constructor(posX: number = 0, posY: number = 0, width: number = 0, height: number = 0, name : string='') {
         this.canvas2D = null; /*i don't want to deal with null values, just create temp context here and set it using set*/

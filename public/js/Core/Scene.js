@@ -27,12 +27,13 @@ export class Scene {
     isCollider(obj) {
         return obj.Collided ? true : false;
     }
-    addObject(obj, name = '') {
+    addObject(obj, name = '', isBackground = false) {
         obj.Canvas = this.renderer.Context;
         obj.name = name;
+        obj.Scene = this;
         this.objects.push(obj);
         if (this.isDrawable(obj)) /*object implements drawable*/
-            this.renderer.addObject(obj);
+            !isBackground ? this.renderer.addObject(obj) : this.renderer.addBackgroundObject(obj);
         if (this.isUpdatable(obj)) /*object implements updatable*/
             this.updatableObjects.push(obj);
         obj.components.forEach(comp => {
@@ -42,21 +43,33 @@ export class Scene {
             }
         });
     }
-    addObjects(obj) {
+    addObjects(obj, areBackground = false) {
         for (let o of obj)
-            this.addObject(o);
+            this.addObject(o, '', areBackground);
     }
     addMap(map) {
         for (let arr of map) {
             for (let obj of arr)
-                this.addObject(obj);
+                this.addObject(obj, "__map_object__", true);
         }
+    }
+    //removes everything from scene
+    clearScene() {
+        this.objects = [];
+        this.updatableObjects = [];
+        this.staticColliders = [];
+        this.dynamicColliders = [];
+        this.colliders = [];
     }
     findByName(name) {
         let out = this.objects.find(obj => obj.name === name);
         if (!out)
             return null;
         return out;
+    }
+    removeByName(name) {
+        let idx = this.objects.findIndex(obj => obj.name === name);
+        idx !== -1 ? this.objects.splice(idx, 1) : {};
     }
     setup() { } //when creating your own scene, you can put objects here
     loop() {

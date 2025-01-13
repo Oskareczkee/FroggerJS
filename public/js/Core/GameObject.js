@@ -1,8 +1,11 @@
 export class GameObject {
     get Canvas() { return this.canvas2D; }
     set Canvas(canvas) { this.canvas2D = canvas; }
+    get Scene() { return this.scene; }
+    set Scene(scene) { this.scene = scene; }
     constructor(posX = 0, posY = 0, width = 0, height = 0, name = '') {
         this.name = '';
+        this.scene = null;
         this.canvas2D = null; /*i don't want to deal with null values, just create temp context here and set it using set*/
         this.name = name;
         this.posX = posX;
