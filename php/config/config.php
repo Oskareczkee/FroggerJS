@@ -1,6 +1,6 @@
 <?php 
     define('PROJECT_ROOT', __DIR__.'../..');
-    define('DB_HOST', 'localhost');
+    define('DB_HOST', 'mysql');
     define('DB_USER', 'admin');
     define('DB_PASS', 'sluchajszczyluzafajdany');
     define('DB_CHARSET', 'utf8mb4');
