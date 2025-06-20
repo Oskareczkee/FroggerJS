@@ -25,3 +25,5 @@ CREATE TABLE scores (
     FOREIGN KEY (user_id) REFERENCES users(id) ON DELETE CASCADE
 );
 ```
+
+sudo UID=$(id -u) docker compose up -d --build
