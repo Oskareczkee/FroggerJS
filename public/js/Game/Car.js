@@ -17,16 +17,6 @@ export var CarDirection;
     CarDirection[CarDirection["Left"] = -1] = "Left";
 })(CarDirection || (CarDirection = {}));
 export class Car extends ImageObject {
-    CarOnCollided(collider, other) {
-        var _a, _b;
-        let canvas = (_b = (_a = other.ObjectRef) === null || _a === void 0 ? void 0 : _a.Canvas) !== null && _b !== void 0 ? _b : null; //idk why for some reason this has canvas undefined at this point
-        if (canvas === null)
-            return;
-        if (other.ObjectRef instanceof Frog) {
-            other.ObjectRef.posX = canvas.canvas.width / 2 - other.ObjectRef.width / 2;
-            other.ObjectRef.posY = canvas.canvas.height - other.ObjectRef.height;
-        }
-    }
     constructor(posX, posY, speed, direction, type) {
         super(posX, posX, 32, 32, type);
         this.direction = CarDirection.Right; /* 1 is right, -1 is left*/
@@ -38,6 +28,16 @@ export class Car extends ImageObject {
         this.collider = new CircleCollider(16, this);
         this.collider.OnCollided = this.CarOnCollided;
         this.addComponent(this.collider);
+    }
+    CarOnCollided(collider, other) {
+        var _a, _b;
+        let canvas = (_b = (_a = other.ObjectRef) === null || _a === void 0 ? void 0 : _a.Canvas) !== null && _b !== void 0 ? _b : null; //idk why for some reason this has canvas undefined at this point
+        if (canvas === null)
+            return;
+        if (other.ObjectRef instanceof Frog) {
+            other.ObjectRef.posX = canvas.canvas.width / 2 - other.ObjectRef.width / 2;
+            other.ObjectRef.posY = canvas.canvas.height - other.ObjectRef.height;
+        }
     }
     update() {
         if (this.Canvas === null)

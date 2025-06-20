@@ -4,8 +4,9 @@ import { Collider } from "./Collider";
 /*Default collision functions which can be used for various colliders*/
 
 //returns object to its previous position on collision
-export function OnCollidedBlock(other : Collider){
-    if(other.ObjectRef===null) return;
+export function OnCollidedBlock(collider : Collider, other: Collider){
+    if(other.ObjectRef===null)
+        return;
 
     other.ObjectRef.posX = other.ObjectRef.prevPosX;
     other.ObjectRef.posY = other.ObjectRef.prevPosY;

@@ -1,7 +1,5 @@
 import { Renderer2D } from "./Renderer2D";
 export class Scene {
-    static get FPS() { return 60.0; }
-    static get UPDATE_INTERVAL() { return 1000 / this.FPS; } /*update interval is in ms*/
     constructor(context2D) {
         this.lastUpdate = 0;
         this.deltaT = 0;
@@ -12,6 +10,8 @@ export class Scene {
         this.dynamicColliders = [];
         this.colliders = [];
     }
+    static get FPS() { return 60.0; }
+    static get UPDATE_INTERVAL() { return 1000 / this.FPS; } /*update interval is in ms*/
     isDrawable(obj) {
         return obj.draw ? true : false;
     }

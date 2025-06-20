@@ -34,6 +34,10 @@ export class MapGeneratorOptions {
     roadCarsSpeedMax = 8;
 
     roadChance = 0.9; // 90%
+
+    constructor(init?: Partial<MapGeneratorOptions>) {
+        Object.assign(this, init);
+    }
 }
 
 export class MapGenerator {

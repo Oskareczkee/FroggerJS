@@ -12,13 +12,6 @@ export class AudioObject {
     set IsPlaying(isItReallyPlaying) { this.playing = isItReallyPlaying; }
 }
 export class AudioManager {
-    get GlobalVolume() { return this.globalVolume; }
-    set GlobalVolume(volume) {
-        this.globalVolume = volume;
-        this.playlist.forEach((element) => {
-            element.AudioElement.volume = element.Volume * this.globalVolume;
-        });
-    }
     constructor(canvas) {
         this.globalVolume = 1;
         this.playlist = [];
@@ -29,6 +22,13 @@ export class AudioManager {
             instance.playlist.forEach(sound => sound.IsPlaying ? sound.AudioElement.play() : {});
         });
         canvas.addEventListener("blur", () => instance.playlist.forEach(sound => sound.AudioElement.pause()));
+    }
+    get GlobalVolume() { return this.globalVolume; }
+    set GlobalVolume(volume) {
+        this.globalVolume = volume;
+        this.playlist.forEach((element) => {
+            element.AudioElement.volume = element.Volume * this.globalVolume;
+        });
     }
     playAll() {
         this.recalculateVolume(); //just in case

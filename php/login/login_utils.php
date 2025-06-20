@@ -86,8 +86,6 @@ function logout() : bool{
 
  /**
  * Returns the logged-in User object.
- * Zwraca obiekt zalogowanego użytkownika.
- *
  * @return User|null User object defined by $user_class if logged in, otherwise null.
  */
 function get_user(): ?User {

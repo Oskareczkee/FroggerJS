@@ -4,6 +4,7 @@ $page_title = "Frogger - Rejestracja";
 $base_url_prefix = '../../../';
 
 require_once $base_url_prefix . 'php/login/login_utils.php';
+require_once $base_url_prefix.'php/config/config.php';
 
 $redirect_url = 'index.html'; //base redirect
 
@@ -28,6 +29,11 @@ $confirm_password_err = "";
 $registration_err = "";
 $registration_success = "";
 
+$captcha_verified = false;
+$captcha_secret = CAPTCHA_SECRET;
+$captcha_response = $_POST['g-recaptcha-response'] ?? '';
+
+
 if ($_SERVER["REQUEST_METHOD"] == "POST") {
 
     //Validate username
@@ -40,6 +46,19 @@ if ($_SERVER["REQUEST_METHOD"] == "POST") {
     } else {
         $username = trim($_POST["username"]);
     }
+    
+
+    //validate captcha
+    if(!empty($captcha_response)){
+        $verify_response = file_get_contents("https://www.google.com/recaptcha/api/siteverify?secret=" . urlencode($captcha_secret) . "&response=" . urlencode($captcha_response));
+        $captcha_data = json_decode($verify_response);
+        if($captcha_data->success)
+            $captcha_verified = true;
+        else
+            $registration_err="CAPTCHA verification failed. Please try again";
+    }
+    else
+        $registration_err = "Please complete CAPTCHA";
 
     //Validate password
     if (empty(trim($_POST["password"]))) {
@@ -111,6 +130,7 @@ require_once $base_url_prefix . 'php/views/templates/header.php';
                             <input type="password" name="confirm_password" id="confirm_password" class="form-control <?php echo (!empty($confirm_password_err)) ? 'is-invalid' : ''; ?>">
                             <span class="invalid-feedback"><?php echo $confirm_password_err; ?></span>
                         </div>
+                        <?php require $base_url_prefix.'php/views/templates/captcha.php'; ?> <!--captcha template-->
                         <div class="form-group text-center mt-4">
                             <input type="submit" class="btn btn-primary btn-lg btn-block" value="Register">
                         </div>

@@ -7,8 +7,14 @@
       "sourceMap": false,
       "rootDir": "./public/src",
       "outDir": "./public/js",
-      "strict": true
+      "strict": true,
+      "skipLibCheck": true
     },
+
+    "devDependencies": {
+      "@types/node": "^20.3.2",
+    },
+
     "lib": ["es2015"],
     "include": ["./public/src/**/*.ts"], //compile files
     "exclude": ["node_modules"] // Pliki do pominięcia

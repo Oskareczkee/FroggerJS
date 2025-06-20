@@ -18,7 +18,7 @@
             $this->id = $user_data['id'] ?? -1;
             $this->username = $user_data['username'] ?? 'Unknown';
             $this->email = $user_data['email'] ?? null;
-            $this->avatarPath = $user_data['avatar_path'] ?? null;
+            $this->avatar_path = $user_data['avatar_path'] ?? null;
         }
     }
 ?>

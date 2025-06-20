@@ -1,14 +1,5 @@
 import { GameObject } from "../GameObject";
 export class SpriteObject extends GameObject {
-    get IsPlaying() { return this.isPlaying; }
-    get CurrentAnimation() { return this.currentAnimation; }
-    SetIdleFrame(row, col, frameWidth, frameHeight) {
-        //cannot use just set, because it requires only one argument, this solves everything
-        this.idleFrameCol = col;
-        this.idleFrameRow = row;
-        this.idleFrameWidth = frameWidth;
-        this.idleFrameHeight = frameHeight;
-    }
     constructor(posX = 0, posY = 0, width = 0, height = 0, sheetSrc, frameWidth, frameHeight) {
         super(posX, posY, width, height);
         this.sheetSrc = '';
@@ -30,6 +21,15 @@ export class SpriteObject extends GameObject {
         this.sheetImg = new Image();
         this.sheetImg.src = sheetSrc;
         this.sheetImg.style.imageRendering = 'pixelated';
+    }
+    get IsPlaying() { return this.isPlaying; }
+    get CurrentAnimation() { return this.currentAnimation; }
+    SetIdleFrame(row, col, frameWidth, frameHeight) {
+        //cannot use just set, because it requires only one argument, this solves everything
+        this.idleFrameCol = col;
+        this.idleFrameRow = row;
+        this.idleFrameWidth = frameWidth;
+        this.idleFrameHeight = frameHeight;
     }
     addAnimation(animation) {
         this.animations[animation.Name] = animation;

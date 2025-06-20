@@ -2,7 +2,7 @@ import { Tile } from "../Core/drawing/Tile";
 import { Car, CarDirection } from "./Car";
 import { FireHydrant } from "./FireHydrant";
 export class MapGeneratorOptions {
-    constructor() {
+    constructor(init) {
         //x coordinate of the first tile
         this.startX = 0;
         //y coordinate of the first tile
@@ -29,6 +29,7 @@ export class MapGeneratorOptions {
         this.roadCarsSpeedMin = 3;
         this.roadCarsSpeedMax = 8;
         this.roadChance = 0.9; // 90%
+        Object.assign(this, init);
     }
 }
 export class MapGenerator {

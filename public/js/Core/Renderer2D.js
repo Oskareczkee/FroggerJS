@@ -1,11 +1,11 @@
 export class Renderer2D {
-    get Context() { return this.renderingContext2D; }
     constructor(context2D) {
         this.fillColor = 'black';
         this.renderingContext2D = context2D;
         this.objects = [];
         this.backgroundObjects = [];
     }
+    get Context() { return this.renderingContext2D; }
     addObject(obj) {
         this.objects.push(obj);
     }

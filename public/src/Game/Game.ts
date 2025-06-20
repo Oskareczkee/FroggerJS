@@ -6,6 +6,7 @@ import { MapGenerator, MapGeneratorOptions } from "./MapGenerator";
 import {Audio as GameAudio} from "./Audio"
 import { Tile } from "../Core/drawing/Tile";
 import { Options } from "./Options";
+import { FroggerMapGeneratorOptions } from "./MapGeneratorOptionsConf";
 
 export class Game{
     private context2D : CanvasRenderingContext2D;
@@ -30,7 +31,7 @@ export class Game{
     public setup(){
         GameAudio.GlobalVolume = 0.1;
 
-        this.map = new MapGenerator(this.context2D).GenerateMap(this.context2D.canvas.width/Options.TileWidth,this.context2D.canvas.height/Options.TileHeigth, new MapGeneratorOptions());
+        this.map = new MapGenerator(this.context2D).GenerateMap(this.context2D.canvas.width/Options.TileWidth,this.context2D.canvas.height/Options.TileHeigth, FroggerMapGeneratorOptions);
         this.actualScene.addMap(this.map);
         this.actualScene.addObject(new Frog(this.context2D.canvas.width/2 - 16,this.context2D.canvas.height - 32 ,32,32), "Frog");
         GameAudio.addAndPlay("../resources/audio/background.mp3", .5, true, "background");
