@@ -1,8 +1,13 @@
 services:
   php:
-    build: ./PHP
+    build:
+      context: ./PHP
+      args:
+        uid: ${UID}
     ports:
       - "8080:80" #-> external 8080, internal 80
+    args:
+      uid : ${UID}
     volumes:
       - ../:/var/www/html
     depends_on:
@@ -13,8 +18,6 @@ services:
     restart: always
     volumes:
       - mysql_data:/var/lib/mysql
-    args:
-      uid : ${UID}
     env_file:
       - ./MySQL/.env
 
