@@ -6,8 +6,6 @@ services:
         uid: ${UID}
     ports:
       - "8080:80" #-> external 8080, internal 80
-    args:
-      uid : ${UID}
     volumes:
       - ../:/var/www/html
     depends_on:
